@@ -23,7 +23,7 @@ SVNBASE=
 SVNARGS=
 SVNUPDATE=1
 
-MODULES="remoting bpm captcha drools excel faces framework international jms mail pdf persistence resteasy rss security"
+MODULES="remoting bpm captcha drools excel faces framework international jms mail pdf persistence resteasy security"
 
 while getopts “h:r:d:v” OPTION
 do
