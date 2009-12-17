@@ -1,0 +1,4 @@
+Seam ${artifactId}
+=============
+
+TODO

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="seam-module-archetype">
+  <requiredProperties>
+      <requiredProperty key="seamVersion" />
+      <requiredProperty key="parentVersion" />
+      <requiredProperty key="groupId">
+         <defaultValue>a</defaultValue>
+      </requiredProperty>
+      <requiredProperty key="package">
+         <defaultValue>a</defaultValue>
+      </requiredProperty>
+   </requiredProperties>
+   <fileSets>
+      <fileSet filtered="true" packaged="false">
+         <directory>src/main/resources</directory>
+         <includes>
+            <include>**/*.xml</include>
+         </includes>
+      </fileSet>
+      <fileSet filtered="true" packaged="false">
+         <directory></directory>
+         <includes>
+            <include>readme.txt</include>
+         </includes>
+      </fileSet>
+   </fileSets>
+</archetype-descriptor>
