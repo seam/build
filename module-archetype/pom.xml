@@ -1,13 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.seam.build</groupId>
-  <artifactId>seam-module-archetype</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
-  <name>Seam Module Archetype</name>
-  
-  <description>
-      The Parent for Seam modules
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.jboss.seam.build</groupId>
+   <artifactId>seam-module-archetype</artifactId>
+   <version>3.0.0-SNAPSHOT</version>
+   <name>Seam Module Archetype</name>
+
+   <parent>
+      <groupId>org.jboss.weld</groupId>
+      <artifactId>weld-parent</artifactId>
+      <version>8</version>
+   </parent>
+
+   <description>
+      The Seam Module Archetype
    </description>
 
    <url>http://www.seamframework.org</url>
@@ -25,5 +31,27 @@
          <name>Seam committers</name>
       </developer>
    </developers>
-  
+
+   <!-- Snapshots repo to get parent -->
+   <repositories>
+      <repository>
+         <id>oss.sonatype.org/jboss-snapshots</id>
+         <name>JBoss (Nexus) Snapshots Repository</name>
+         <url>http://oss.sonatype.org/content/repositories/jboss-snapshots</url>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+         </snapshots>
+      </repository>
+   </repositories>
+
+   <scm>
+      <connection>scm:svn:http://anonsvn.jboss.org/repos/seam/build/trunk/parent</connection>
+      <developerConnection>scm:svn:https://svn.jboss.org/repos/seam/build/trunk/parent</developerConnection>
+      <url>http://fisheye.jboss.org/browse/Seam/build/trunk/parent</url>
+   </scm>
+
 </project>
