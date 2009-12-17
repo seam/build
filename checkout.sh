@@ -12,7 +12,7 @@ OPTIONS:
    -d      Destination directory, otherwise the PWD is used 
    -r      Checkout in readonly mode from anonsvn
    -v      Be more verbose
-   -du     Don't run SVN update if the module already exists
+   -du     Dont run SVN update if the module already exists
 EOF
 }
 
@@ -53,9 +53,9 @@ done
 
 if [ "$READONLY" -eq "1" ]
 then
-   SVNBASE="http://anonsvn.jboss.org/repos/seam/modules"
+   SVNBASE="http://anonsvn.jboss.org/repos/seam"
 else
-   SVNBASE="https://svn.jboss.org/repos/seam/modules"
+   SVNBASE="https://svn.jboss.org/repos/seam"
 fi
 
 if [ "$VERBOSE" -eq "0" ]
@@ -73,7 +73,7 @@ fi
 
 for module in $MODULES
 do
-   url="$SVNBASE/$module/trunk"
+   url="$SVNBASE/modules/$module/trunk"
    moduledir=$DESTINATION/$module
    if [ -d $moduledir ]
    then
@@ -85,3 +85,27 @@ do
    fi
    $svncmd
 done
+
+url="$SVNBASE/dist/trunk"
+moduledir=$DESTINATION/dist
+if [ -d $moduledir ]
+then
+   echo "Updating dist"
+   svncmd="svn up $SVNARGS $DESTINATION/dist"
+else
+   echo "Checking out dist"
+   svncmd="svn co $SVNARGS $url $DESTINATION/dist"
+fi
+$svncmd
+
+url="$SVNBASE/build/trunk"
+moduledir=$DESTINATION/build
+if [ -d $moduledir ]
+then
+   echo "Updating build"
+   svncmd="svn up $SVNARGS $DESTINATION/build"
+else
+   echo "Checking out build"
+   svncmd="svn co $SVNARGS $url $DESTINATION/build"
+fi
+$svncmd
