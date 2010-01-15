@@ -23,7 +23,7 @@ SVNBASE=
 SVNARGS=
 SVNUPDATE=1
 
-MODULES="remoting drools faces international persistence security"
+MODULES="remoting drools faces international persistence security xml"
 
 while getopts “h:r:d:v” OPTION
 do
