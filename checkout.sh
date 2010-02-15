@@ -16,40 +16,8 @@ OPTIONS:
 EOF
 }
 
-DESTINATION=`pwd`
-READONLY=0
-VERBOSE=0
-SVNBASE=
-SVNARGS=
-SVNUPDATE=1
-
-MODULES="remoting drools faces international persistence security xml"
-
-while getopts “h:r:d:v” OPTION
-do
-     case $OPTION in
-         h)
-             usage
-             exit 1
-             ;;
-         d)
-             DESTINATION=$OPTARG
-             ;;
-         du)
-             SVNUPDATE=0
-             ;;
-         r)
-             READONLY=1
-             ;;
-         v)
-             VERBOSE=1
-             ;;
-         ?)
-             usage
-             exit
-             ;;
-     esac
-done
+work()
+{
 
 if [ "$READONLY" -eq "1" ]
 then
@@ -109,3 +77,46 @@ else
    svncmd="svn co $SVNARGS $url $DESTINATION/build"
 fi
 $svncmd
+}
+
+DESTINATION=`pwd`
+READONLY=0
+VERBOSE=0
+SVNBASE=
+SVNARGS=
+SVNUPDATE=1
+
+MODULES="remoting drools faces international persistence security xml"
+
+while getopts “hrd:v” OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             ;;
+         d)
+             DESTINATION=$OPTARG
+             work;
+             ;;
+         du)
+             SVNUPDATE=0
+             work;
+             ;;
+         r)
+             READONLY=1
+             work;
+             ;;
+         v)
+             VERBOSE=1
+             work;
+             ;;
+         [?])
+             usage;
+             ;;
+     esac
+done
+
+if [[ "$#" -eq "0" ]]
+then
+   work;
+fi
