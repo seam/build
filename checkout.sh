@@ -116,7 +116,7 @@ do
      esac
 done
 
-if [[ "$#" -eq "0" ]]
+if [ "$#" -eq "0" ]
 then
    work;
 fi
