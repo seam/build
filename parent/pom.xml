@@ -59,6 +59,11 @@
             <updatePolicy>never</updatePolicy>
          </snapshots>
       </repository>
+      <repository>
+         <id>apache-incubating</id>
+         <name>Apache Snapshot Repository</name>
+         <url>http://people.apache.org/repo/m2-snapshot-repository/</url>
+      </repository>
    </repositories>
 
    <pluginRepositories>
