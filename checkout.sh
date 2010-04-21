@@ -86,7 +86,7 @@ SVNBASE=
 SVNARGS=
 SVNUPDATE=1
 
-MODULES="remoting drools faces international persistence security xml"
+MODULES="remoting drools faces international persistence security xml jms wicket servlet"
 
 while getopts “hrd:v” OPTION
 do
