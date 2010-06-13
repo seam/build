@@ -66,6 +66,19 @@ else
 fi
 $svncmd
 
+url="$SVNBASE/examples/trunk"
+moduledir=$DESTINATION/examples
+if [ -d $moduledir ]
+then
+   echo "Updating examples"
+   svncmd="svn up $SVNARGS $DESTINATION/examples"
+else
+   echo "Checking out examples"
+   svncmd="svn co $SVNARGS $url $DESTINATION/examples"
+fi
+$svncmd
+
+
 url="$SVNBASE/build/trunk"
 moduledir=$DESTINATION/build
 if [ -d $moduledir ]
