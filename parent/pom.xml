@@ -4,7 +4,7 @@
    <groupId>org.jboss.seam</groupId>
    <artifactId>seam-parent</artifactId>
    <packaging>pom</packaging>
-   <version>3-SNAPSHOT</version>
+   <version>3</version>
    <name>Seam Parent</name>
 
    <parent>
@@ -176,9 +176,9 @@
    </dependencyManagement>
 
    <scm>
-      <connection>scm:svn:http://anonsvn.jboss.org/repos/seam/build/trunk/parent</connection>
-      <developerConnection>scm:svn:https://svn.jboss.org/repos/seam/build/trunk/parent</developerConnection>
-      <url>http://fisheye.jboss.org/browse/Seam/seam/build/trunk/parent</url>
+      <connection>scm:svn:http://anonsvn.jboss.org/repos/seam/build/tags/seam-parent-3</connection>
+      <developerConnection>scm:svn:https://svn.jboss.org/repos/seam/build/tags/seam-parent-3</developerConnection>
+      <url>http://fisheye.jboss.org/browse/Seam/seam/build/tags/seam-parent-3</url>
    </scm>
 
 </project>
