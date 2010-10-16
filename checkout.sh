@@ -12,7 +12,7 @@ OPTIONS:
    -d      Destination directory, otherwise the PWD is used 
    -r      Checkout in readonly mode from anonsvn
    -v      Be more verbose
-   -du     Dont run SVN update if the module already exists
+   -du     Dont run git fetch if the module already exists
 EOF
 }
 
@@ -21,14 +21,14 @@ work()
 
 if [ "$READONLY" -eq "1" ]
 then
-   SVNBASE="http://anonsvn.jboss.org/repos/seam"
+   GITBASE="git://github.com/seam"
 else
-   SVNBASE="https://svn.jboss.org/repos/seam"
+   GITBASE="git@github.com:seam"
 fi
 
 if [ "$VERBOSE" -eq "0" ]
 then
-   SVNARGS="--quiet"
+   GITARGS=""
 fi
   
 if  [ -d $DESTINATION ]
@@ -41,53 +41,53 @@ fi
 
 for module in $MODULES
 do
-   url="$SVNBASE/modules/$module/trunk"
+   url="$GITBASE/$module.git"
    moduledir=$DESTINATION/$module
    if [ -d $moduledir ]
    then
       echo "Updating $module"
-      svncmd="svn up $SVNARGS $DESTINATION/$module"
+      svncmd="git $GITARGS --git-dir=$DESTINATION/$module/.git fetch"
    else
       echo "Checking out $module"
-      svncmd="svn co $SVNARGS $url $DESTINATION/$module"
+      svncmd="git clone $GITARGS $url $DESTINATION/$module"
    fi
    $svncmd
 done
 
-url="$SVNBASE/dist/trunk"
+url="$GITBASE/dist.git"
 moduledir=$DESTINATION/dist
 if [ -d $moduledir ]
 then
    echo "Updating dist"
-   svncmd="svn up $SVNARGS $DESTINATION/dist"
+   svncmd="git $GITARGS --git-dir=$DESTINATION/dist/.git fetch"
 else
    echo "Checking out dist"
-   svncmd="svn co $SVNARGS $url $DESTINATION/dist"
+   svncmd="git clone $GITARGS $url $DESTINATION/dist"
 fi
 $svncmd
 
-url="$SVNBASE/examples/trunk"
+url="$GITBASE/examples.git"
 moduledir=$DESTINATION/examples
 if [ -d $moduledir ]
 then
    echo "Updating examples"
-   svncmd="svn up $SVNARGS $DESTINATION/examples"
+   svncmd="git $GITARGS --git-dir=$DESTINATION/examples/.git fetch"
 else
    echo "Checking out examples"
-   svncmd="svn co $SVNARGS $url $DESTINATION/examples"
+   svncmd="git clone $GITARGS $url $DESTINATION/examples"
 fi
 $svncmd
 
 
-url="$SVNBASE/build/trunk"
+url="$GITBASE/build.git"
 moduledir=$DESTINATION/build
 if [ -d $moduledir ]
 then
    echo "Updating build"
-   svncmd="svn up $SVNARGS $DESTINATION/build"
+   svncmd="git $GITARGS --git-dir=$DESTINATION/build/.git fetch"
 else
    echo "Checking out build"
-   svncmd="svn co $SVNARGS $url $DESTINATION/build"
+   svncmd="git clone $GITARGS $url $DESTINATION/build"
 fi
 $svncmd
 }
@@ -95,11 +95,11 @@ $svncmd
 DESTINATION=`pwd`
 READONLY=0
 VERBOSE=0
-SVNBASE=
-SVNARGS=
+GITBASE=
+GITARGS=
 SVNUPDATE=1
 
-MODULES="documents drools faces international jbpm jms persistence remoting resteasy security servlet wicket xml"
+MODULES="catch documents drools faces international jbpm jms mail persistence js-remoting resteasy security servlet wicket xml-config"
 
 while getopts “hrd:v” OPTION
 do
