@@ -44,9 +44,9 @@
    </dependencies>
 
    <scm>
-      <connection>scm:svn:http://anonsvn.jboss.org/repos/seam/modules/${artifactId}/trunk</connection>
-      <developerConnection>scm:svn:https://svn.jboss.org/repos/seam/modules/${artifactId}/trunk</developerConnection>
-      <url>http://fisheye.jboss.org/browse/Seam/modules/${artifactId}/trunk</url>
+      <connection>scm:git:http://github.com/seam/modules/${artifactId}/trunk</connection>
+      <developerConnection>scm:git:https://svn.jboss.org/repos/seam/modules/${artifactId}/trunk</developerConnection>
+      <url>http://github.com/seam${artifactId}/trunk</url>
    </scm>
 
 </project>

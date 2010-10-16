@@ -75,9 +75,9 @@
    </profiles>
 
    <scm>
-      <connection>scm:svn:http://anonsvn.jboss.org/repos/seam/build/trunk/parent</connection>
-      <developerConnection>scm:svn:https://svn.jboss.org/repos/seam/build/trunk/parent</developerConnection>
-      <url>http://fisheye.jboss.org/browse/Seam/build/trunk/parent</url>
+      <connection>scm:git:git://github.com/seam/parent.git</connection>
+      <developerConnection>scm:git:git@github.com:seam/parent.git</developerConnection>
+      <url>http://github.com/seam</url>
    </scm>
 
 </project>
