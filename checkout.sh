@@ -5,20 +5,19 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script will check out Seam.
+This script will check out Seam 3.
 
 OPTIONS:
-   -h      Show this message
+   -h      Show this usage message
    -d      Destination directory, otherwise the PWD is used 
-   -r      Checkout in readonly mode from anonsvn
+   -m      Checkout (clone) in manager mode (SSH mode) (default is read-only)
    -v      Be more verbose
-   -du     Dont run git fetch if the module already exists
+   -du     Dont run git fetch if the repository has already been cloned
 EOF
 }
 
 work()
 {
-
 if [ "$READONLY" -eq "1" ]
 then
    GITBASE="git://github.com/seam"
@@ -33,73 +32,37 @@ fi
   
 if  [ -d $DESTINATION ]
 then
-   echo "Checking out to $DESTINATION"
+   echo "Detected previously cloned repository at $DESTINATION"
 else
-   echo "Creating directory $DESTINATION to checkout to"
+   echo "Creating target clone directory $DESTINATION"
    mkdir $DESTINATION
 fi
 
-for module in $MODULES
+for repo in $REPOS
 do
-   url="$GITBASE/$module.git"
-   moduledir=$DESTINATION/$module
-   if [ -d $moduledir ]
+   url="$GITBASE/$repo.git"
+   repodir=$DESTINATION/$repo
+   if [ -d $repodir ]
    then
-      echo "Updating $module"
-      svncmd="git $GITARGS --git-dir=$DESTINATION/$module/.git fetch"
+      echo "Updating $repo"
+      svncmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
    else
-      echo "Checking out $module"
-      svncmd="git clone $GITARGS $url $DESTINATION/$module"
+      echo "Cloning $repo"
+      svncmd="git clone $GITARGS $url $DESTINATION/$repo"
    fi
    $svncmd
 done
-
-url="$GITBASE/dist.git"
-moduledir=$DESTINATION/dist
-if [ -d $moduledir ]
-then
-   echo "Updating dist"
-   svncmd="git $GITARGS --git-dir=$DESTINATION/dist/.git fetch"
-else
-   echo "Checking out dist"
-   svncmd="git clone $GITARGS $url $DESTINATION/dist"
-fi
-$svncmd
-
-url="$GITBASE/examples.git"
-moduledir=$DESTINATION/examples
-if [ -d $moduledir ]
-then
-   echo "Updating examples"
-   svncmd="git $GITARGS --git-dir=$DESTINATION/examples/.git fetch"
-else
-   echo "Checking out examples"
-   svncmd="git clone $GITARGS $url $DESTINATION/examples"
-fi
-$svncmd
-
-
-url="$GITBASE/build.git"
-moduledir=$DESTINATION/build
-if [ -d $moduledir ]
-then
-   echo "Updating build"
-   svncmd="git $GITARGS --git-dir=$DESTINATION/build/.git fetch"
-else
-   echo "Checking out build"
-   svncmd="git clone $GITARGS $url $DESTINATION/build"
-fi
-$svncmd
 }
 
 DESTINATION=`pwd`
-READONLY=0
+READONLY=1
 VERBOSE=0
 GITBASE=
 GITARGS=
-SVNUPDATE=1
+GITFETCH=1
 
-MODULES="catch documents drools faces international jbpm jms mail persistence js-remoting resteasy security servlet wicket xml-config"
+# NOTE still waiting on mail to be migrated
+REPOS="build dist examples catch documents drools faces international jbpm jms persistence js-remoting resteasy security servlet wicket xml-config"
 
 while getopts “hrd:v” OPTION
 do
@@ -112,11 +75,11 @@ do
              work;
              ;;
          du)
-             SVNUPDATE=0
+             GITFETCH=0
              work;
              ;;
-         r)
-             READONLY=1
+         m)
+             READONLY=0
              work;
              ;;
          v)
