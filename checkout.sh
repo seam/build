@@ -45,12 +45,12 @@ do
    if [ -d $repodir ]
    then
       echo "Updating $repo"
-      svncmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
+      gitcmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
    else
       echo "Cloning $repo"
-      svncmd="git clone $GITARGS $url $DESTINATION/$repo"
+      gitcmd="git clone $GITARGS $url $DESTINATION/$repo"
    fi
-   $svncmd
+   $gitcmd
 done
 }
 

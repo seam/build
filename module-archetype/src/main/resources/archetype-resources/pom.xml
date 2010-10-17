@@ -44,9 +44,9 @@
    </dependencies>
 
    <scm>
-      <connection>scm:git:http://github.com/seam/modules/${artifactId}/trunk</connection>
-      <developerConnection>scm:git:https://svn.jboss.org/repos/seam/modules/${artifactId}/trunk</developerConnection>
-      <url>http://github.com/seam${artifactId}/trunk</url>
+      <connection>scm:git:git://github.com/seam/${artifactId}.git</connection>
+      <developerConnection>scm:git:git@github.com:seam/${artifactId}.git</developerConnection>
+      <url>http://github.com/seam/${artifactId}</url>
    </scm>
 
 </project>
