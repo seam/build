@@ -64,7 +64,7 @@ GITFETCH=1
 # NOTE still waiting on mail to be migrated
 REPOS="build dist examples catch documents drools faces international jbpm jms persistence js-remoting resteasy security servlet wicket xml-config"
 
-while getopts “hrd:v” OPTION
+while getopts “hmd:v” OPTION
 do
      case $OPTION in
          h)
