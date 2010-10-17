@@ -12,7 +12,8 @@ OPTIONS:
    -d      Destination directory, otherwise the PWD is used 
    -m      Checkout (clone) in manager mode (SSH mode) (default is read-only)
    -v      Be more verbose
-   -du     Dont run git fetch if the repository has already been cloned
+   -c      Don't run git fetch if the repository has already been cloned
+   -b      Build and install parent, tools and bom modules
 EOF
 }
 
@@ -32,26 +33,47 @@ fi
   
 if  [ -d $DESTINATION ]
 then
-   echo "Detected previously cloned repository at $DESTINATION"
+   echo "Using existing destination directory $DESTINATION"
 else
-   echo "Creating target clone directory $DESTINATION"
+   echo "Creating destination directory $DESTINATION"
    mkdir $DESTINATION
 fi
 
 for repo in $REPOS
 do
+   unset gitcmd
    url="$GITBASE/$repo.git"
    repodir=$DESTINATION/$repo
    if [ -d $repodir ]
    then
-      echo "Updating $repo"
-      gitcmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
+      if [ "$GITFETCH" -eq "1" ]; then
+         echo "Updating $repo"
+         gitcmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
+      else
+         echo "Skipping existing cloned repository $DESTINATION/$repo"
+      fi
    else
       echo "Cloning $repo"
       gitcmd="git clone $GITARGS $url $DESTINATION/$repo"
    fi
-   $gitcmd
+   if [ ! -z $gitcmd ]; then
+      $gitcmd
+   fi
 done
+
+if [ "$BUILD" -eq "1" ]
+then
+   echo "Building Seam parent, tools and bom modules"
+   cd build/parent
+   mvn clean install
+   cd -
+   cd build/tools
+   mvn clean install
+   cd -
+   cd dist
+   mvn clean install -N
+   cd -
+fi
 }
 
 DESTINATION=`pwd`
@@ -60,39 +82,42 @@ VERBOSE=0
 GITBASE=
 GITARGS=
 GITFETCH=1
+BUILD=0
+RUN=1
 
 # NOTE still waiting on mail to be migrated
 REPOS="build dist examples catch documents drools faces international jbpm jms persistence js-remoting resteasy security servlet wicket xml-config"
 
-while getopts “hmd:v” OPTION
+while getopts “hmbcv” OPTION
 do
      case $OPTION in
          h)
              usage
+             RUN=0
              ;;
          d)
              DESTINATION=$OPTARG
-             work;
              ;;
-         du)
+         c)
              GITFETCH=0
-             work;
              ;;
          m)
              READONLY=0
-             work;
+             ;;
+         b)
+             BUILD=1
              ;;
          v)
              VERBOSE=1
-             work;
              ;;
          [?])
              usage;
+             RUN=0
              ;;
      esac
 done
 
-if [ "$#" -eq "0" ]
+if [ "$RUN" -eq "1" ]
 then
    work;
 fi
