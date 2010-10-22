@@ -56,7 +56,8 @@ do
       echo "Cloning $repo"
       gitcmd="git clone $GITARGS $url $DESTINATION/$repo"
    fi
-   if [ ! -z $gitcmd ]; then
+   if [ -n "$gitcmd" ]
+   then
       $gitcmd
    fi
 done
