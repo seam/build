@@ -41,16 +41,24 @@
    <properties>
       <testng.version>5.10</testng.version>
       <junit.version>4.8.1</junit.version>
-      <arquillian.version>1.0.0.Alpha2</arquillian.version>
+      <arquillian.version>1.0.0.Alpha4</arquillian.version>
+      <jetty.version>8.0.0.M1</jetty.version>
+      
       <slf4j.version>1.5.10</slf4j.version>
-      <weld.se.version>1.0.1-Final</weld.se.version>
-      <weld.servlet.version>1.0.1-Final</weld.servlet.version>
+      <jboss.logging.version>3.0.0.Beta4</jboss.logging.version>
+      
+      <cdi-api.version>1.0-SP2</cdi-api.version>
+      <weld.version>1.1.0.Beta1</weld.version>
+      <weld.extensions.version>1.0.0.Beta1</weld.extensions.version>
+      
       <glassfish.el.version>2.1.2-b04</glassfish.el.version>
-      <jsf.impl.version>2.0.2</jsf.impl.version>
+      
       <hibernate.validator.version>4.0.0.GA</hibernate.validator.version>
       <hibernate.version>3.5.1-Final</hibernate.version>
+      
+      <jsf.impl.version>2.0.2</jsf.impl.version>
       <jsfmock.version>1.0.0</jsfmock.version>
-      <pretty.faces.version>2.0.4</pretty.faces.version>
+      <pretty.faces.version>3.1.0</pretty.faces.version>
       <hsqldb.version>1.8.0.10</hsqldb.version>
    </properties>
 
@@ -99,6 +107,30 @@
             <artifactId>arquillian-glassfish-embedded-30</artifactId>
             <version>${arquillian.version}</version>
          </dependency>
+         
+         <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-jetty-embedded-7</artifactId>
+            <version>${arquillian.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+            <version>${arquillian.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-plus</artifactId>
+            <version>${jetty.version}</version>
+         </dependency>    
 
          <dependency>
             <groupId>org.slf4j</groupId>
@@ -113,15 +145,50 @@
          </dependency>
 
          <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${jboss.logging.version}</version>
+         </dependency>
+
+
+         <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>${cdi-api.version}</version>
+         </dependency>    
+
+         <dependency>
             <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core</artifactId>
+            <version>${weld.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se</artifactId>
-            <version>${weld.se.version}</version>
+            <version>${weld.version}</version>
          </dependency>
 
          <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
-            <version>${weld.servlet.version}</version>
+            <version>${weld.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-extensions</artifactId>
+            <version>${weld.extensions.version}</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>javax.transaction</groupId>
+                  <artifactId>jta</artifactId>
+               </exclusion>
+               <exclusion>
+                  <groupId>javax.el</groupId>
+                  <artifactId>el-api</artifactId>
+               </exclusion>
+            </exclusions>
          </dependency>
 
          <dependency>
@@ -162,7 +229,19 @@
 
          <dependency>
             <groupId>com.ocpsoft</groupId>
-            <artifactId>ocpsoft-pretty-faces</artifactId>
+            <artifactId>prettyfaces-jsf11</artifactId>
+            <version>${pretty.faces.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.ocpsoft</groupId>
+            <artifactId>prettyfaces-jsf12</artifactId>
+            <version>${pretty.faces.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.ocpsoft</groupId>
+            <artifactId>prettyfaces-jsf2</artifactId>
             <version>${pretty.faces.version}</version>
          </dependency>
 
