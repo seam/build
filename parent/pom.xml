@@ -92,12 +92,6 @@
 
          <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-weld-embedded</artifactId>
-            <version>${arquillian.version}</version>
-         </dependency>
-
-         <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-jbossas-remote-60</artifactId>
             <version>${arquillian.version}</version>
          </dependency>
@@ -111,6 +105,18 @@
          <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-jetty-embedded-7</artifactId>
+            <version>${arquillian.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded-1</artifactId>
+            <version>${arquillian.version}</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-ee-embedded-1</artifactId>
             <version>${arquillian.version}</version>
          </dependency>
          
