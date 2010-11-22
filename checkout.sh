@@ -89,7 +89,7 @@ RUN=1
 # NOTE still waiting on mail to be migrated
 REPOS="parent build dist examples catch documents drools faces international jbpm jms persistence js-remoting rest security servlet wicket xml-config clouds ticket-monster solder"
 
-while getopts “hmbcv” OPTION
+while getopts “hmd:bcv” OPTION
 do
      case $OPTION in
          h)
