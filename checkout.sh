@@ -86,8 +86,7 @@ GITFETCH=1
 BUILD=0
 RUN=1
 
-# NOTE still waiting on mail to be migrated
-REPOS="parent build dist examples catch documents drools faces international jbpm jms persistence js-remoting rest security servlet wicket config clouds ticket-monster solder"
+REPOS="parent build dist examples catch clouds config documents drools faces international jbpm jms mail persistence js-remoting rest security servlet solder ticket-monster wicket"
 
 while getopts “hmd:bcv” OPTION
 do
