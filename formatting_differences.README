@@ -1,0 +1,9 @@
+The JBoss Community formatting is very similar to the standard Sun formatting
+with a few changes:
+
+*  JavaDoc parameter information is on the same line, not indented
+*  Line length is 128 characters
+*  Spaces are used instead of tabs
+*  Switch blocks are indented
+*  Indentation size is 4
+
