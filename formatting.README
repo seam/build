@@ -1,10 +1,16 @@
 The JBoss Community formatting, as established by the AS7 project, is very
-similar to the standard Sun formatting, with the exception of a few minor
-corrections for consistency:
+similar to the standard Java formatting convention, with the exception of a few
+minor corrections for consistency:
 
 *  JavaDoc parameter information is on the same line, not indented
 *  Line length is 128 characters
 *  Spaces are used instead of tabs
 *  Switch blocks are indented
-*  Indentation size is 4 (Java and XML files)
+*  Indentation size is 4
+
+The formatting rules for XML source follow suit:
+
+*  Line length is 128 characters
+*  Spaces are used instead of tabs
+*  Indentation size is 4
 
