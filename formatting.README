@@ -6,5 +6,5 @@ corrections for consistency:
 *  Line length is 128 characters
 *  Spaces are used instead of tabs
 *  Switch blocks are indented
-*  Indentation size is 4
+*  Indentation size is 4 (Java and XML files)
 
