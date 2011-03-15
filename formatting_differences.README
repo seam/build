@@ -1,5 +1,6 @@
-The JBoss Community formatting is very similar to the standard Sun formatting
-with a few changes:
+The JBoss Community formatting, as established by the AS7 project, is very
+similar to the standard Sun formatting, with the exception of a few minor
+corrections for consistency:
 
 *  JavaDoc parameter information is on the same line, not indented
 *  Line length is 128 characters
