@@ -8,7 +8,7 @@ minor corrections for consistency:
 *  Switch blocks are indented
 *  Indentation size is 4
 
-The formatting rules for XML source follow suit:
+The formatting rules for XML source (pom.xml, docbook, descriptors) follow suit:
 
 *  Line length is 128 characters
 *  Spaces are used instead of tabs
