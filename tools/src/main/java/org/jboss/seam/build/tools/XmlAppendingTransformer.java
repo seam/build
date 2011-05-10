@@ -21,92 +21,73 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public class XmlAppendingTransformer implements ResourceTransformer
-{
-   
-   String resource;
+public class XmlAppendingTransformer implements ResourceTransformer {
 
-   private Document doc;
+    String resource;
 
-   public boolean canTransformResource(String resource)
-   {
-      if ( this.resource != null && this.resource.equalsIgnoreCase( resource ) )
-      {
-          return true;
-      }
+    private Document doc;
 
-      return false;
-   }
+    public boolean canTransformResource(String resource) {
+        if (this.resource != null && this.resource.equalsIgnoreCase(resource)) {
+            return true;
+        }
 
-   public boolean hasTransformedResource()
-   {
-      return doc != null;
-   }
+        return false;
+    }
 
-   public void modifyOutputStream(JarOutputStream os) throws IOException
-   {
-      os.putNextEntry(new JarEntry(resource));
+    public boolean hasTransformedResource() {
+        return doc != null;
+    }
 
-      new XMLOutputter(Format.getPrettyFormat()).output(doc, os);
+    public void modifyOutputStream(JarOutputStream os) throws IOException {
+        os.putNextEntry(new JarEntry(resource));
 
-      doc = null;
-   }
+        new XMLOutputter(Format.getPrettyFormat()).output(doc, os);
 
-   public void processResource(String resource, InputStream is, List relocators) throws IOException
-   {
-      Document r;
-      try
-      {
-         SAXBuilder builder = new SAXBuilder(false);
-         builder.setExpandEntities(false);
-         builder.setEntityResolver(new EntityResolver()
-         {
-            public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
-            {
-               return new InputSource(new StringReader(""));
+        doc = null;
+    }
+
+    public void processResource(String resource, InputStream is, List relocators) throws IOException {
+        Document r;
+        try {
+            SAXBuilder builder = new SAXBuilder(false);
+            builder.setExpandEntities(false);
+            builder.setEntityResolver(new EntityResolver() {
+                public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+                    return new InputSource(new StringReader(""));
+                }
+            });
+            // Allow empty files
+            if (is.available() == 0) {
+                return;
             }
-         });
-         // Allow empty files
-         if (is.available() == 0)
-         {
-            return;
-         }
-         r = builder.build(is);
-      }
-      catch (JDOMException e)
-      {
-         throw new RuntimeException(e);
-      }
+            r = builder.build(is);
+        } catch (JDOMException e) {
+            throw new RuntimeException(e);
+        }
 
-      if (doc == null)
-      {
-         doc = r;
-      }
-      else
-      {
-         Element root = r.getRootElement();
+        if (doc == null) {
+            doc = r;
+        } else {
+            Element root = r.getRootElement();
 
-         for (Iterator itr = root.getAttributes().iterator(); itr.hasNext();)
-         {
-            Attribute a = (Attribute) itr.next();
-            itr.remove();
+            for (Iterator itr = root.getAttributes().iterator(); itr.hasNext();) {
+                Attribute a = (Attribute) itr.next();
+                itr.remove();
 
-            Element mergedEl = doc.getRootElement();
-            Attribute mergedAtt = mergedEl.getAttribute(a.getName(), a.getNamespace());
-            if (mergedAtt == null)
-            {
-               mergedEl.setAttribute(a);
+                Element mergedEl = doc.getRootElement();
+                Attribute mergedAtt = mergedEl.getAttribute(a.getName(), a.getNamespace());
+                if (mergedAtt == null) {
+                    mergedEl.setAttribute(a);
+                }
             }
-         }
 
-         for (Iterator itr = root.getChildren().iterator(); itr.hasNext();)
-         {
-            Content n = (Content) itr.next();
-            itr.remove();
+            for (Iterator itr = root.getChildren().iterator(); itr.hasNext();) {
+                Content n = (Content) itr.next();
+                itr.remove();
 
-            doc.getRootElement().addContent(n);
-         }
-      }
-   }
-
+                doc.getRootElement().addContent(n);
+            }
+        }
+    }
 }
