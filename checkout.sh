@@ -8,12 +8,14 @@ usage: $0 options
 This script will check out Seam 3.
 
 OPTIONS:
+   -a      When performing a fetch use --all to retrieve all remotes
+   -b      Build and install parent, tools and bom modules
    -h      Show this usage message
    -d      Destination directory, otherwise the PWD is used 
    -m      Checkout (clone) in manager mode (SSH mode) (default is read-only)
    -v      Be more verbose
    -c      Don't run git fetch if the repository has already been cloned
-   -b      Build and install parent, tools and bom modules
+   -p      Perform a git pull origin for each of the modules
 EOF
 }
 
@@ -41,6 +43,7 @@ fi
 
 for repo in $REPOS
 do
+   update=0
    unset gitcmd
    url="$GITBASE/$repo.git"
    repodir=$DESTINATION/$repo
@@ -48,16 +51,37 @@ do
    then
       if [ "$GITFETCH" -eq "1" ]; then
          echo "Updating $repo"
-         gitcmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
+
+         if [ "$FETCHALL" -eq "1" ]; then
+           gitcmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch --all" 
+         else 
+           gitcmd="git $GITARGS --git-dir=$DESTINATION/$repo/.git fetch"
+         fi
+
+         update=1
+         $gitcmd
       else
          echo "Skipping existing cloned repository $DESTINATION/$repo"
+         update=1
       fi
-   else
+   fi
+
+   if [ "$PULL" -eq "1" ]; then
+      cd $DESTINATION/$repo
+      status=$(git status --porcelain)
+      if [ -z "$status" ]; then
+        echo "Pulling $repo"
+        gitcmd="git $GITARGS pull"
+        $gitcmd
+        update=1
+      else
+        echo "Local changes, no pull occurred"
+      fi
+   fi
+
+   if [ "$update" -eq "0" ]; then
       echo "Cloning $repo"
       gitcmd="git clone $GITARGS $url $DESTINATION/$repo"
-   fi
-   if [ -n "$gitcmd" ]
-   then
       $gitcmd
    fi
 done
@@ -83,14 +107,19 @@ VERBOSE=0
 GITBASE=
 GITARGS=
 GITFETCH=1
+FETCHALL=0
 BUILD=0
+PULL=0
 RUN=1
 
 REPOS="parent build dist examples catch config drools faces international jcr jms mail persistence remoting rest security servlet social solder validation ticket-monster wicket"
 
-while getopts “hmd:bcv” OPTION
+while getopts “aphmd:bcv” OPTION
 do
      case $OPTION in
+         a)
+             FETCHALL=1
+             ;;
          h)
              usage
              RUN=0
@@ -109,6 +138,9 @@ do
              ;;
          v)
              VERBOSE=1
+             ;;
+         p)
+             PULL=1
              ;;
          [?])
              usage;
